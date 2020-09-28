@@ -5,7 +5,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 // 列表数据源
 const ListData = [
     {id: '1', title: '官方demo', routeName: 'OfficialDemo'},
-    {id: '2', title: 'ScrollView', routeName: 'OfficialDemo'}
+    {id: '2', title: 'ScrollView', routeName: 'MyScrollView'}
 ];
 
 // 列表行元素
