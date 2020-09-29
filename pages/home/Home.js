@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import { Text, View, FlatList, SafeAreaView, StyleSheet, Image, ImageBackground } from 'react-native';
+import { Text, View, FlatList, SafeAreaView, StyleSheet, Image, ImageBackground, Alert } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import MyButton from '@customComponents/MyButton'
-import { block, color } from 'react-native-reanimated';
+import MyButton from '@/customComponents/MyButton'
 
 // 列表行元素组件
 const Item = ({item, index, onPress, selectIndex}) => {
@@ -25,7 +24,7 @@ class ItemDivideComponent extends Component {
     }
 }
 
-// 列表头部视图
+// 列表头部组件
 class ListHeader extends Component {
     constructor(props) {
         super(props);
@@ -38,6 +37,22 @@ class ListHeader extends Component {
             style={[styles.header, {display: this.props.headerDisplay}]}>
                 <Text style={styles.headerText}>{'ListHeaderComponent'}</Text>
             </ImageBackground>
+        );
+    }
+}
+
+// 列表尾部组件
+class ListFooter extends Component {
+    constructor(props) {
+        super(props);
+    }
+    render() {
+        const logoUrl = 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=4154050993,1802582157&fm=26&gp=0.jpg';
+        return (
+            <View style={[styles.footer, {display: this.props.headerDisplay}]}>
+                <Image style={styles.footerImage} source={{uri: logoUrl}}></Image>
+                <Text style={styles.footerText}>{'To be perfect...'}</Text>
+            </View>
         );
     }
 }
@@ -69,6 +84,7 @@ export default class Home extends Component {
             headerDisplay: 'none', //根据数据源是否为空控制头部展示
         };
         this.onRefresh = this.onRefresh.bind(this);
+        // this.onEndReached = this.onEndReached.bind(this);
     }
 
     // 行元素选中回调
@@ -93,6 +109,11 @@ export default class Home extends Component {
         }, 1000);
     }
 
+    // 上拉加载回调
+    // onEndReached() {
+    //     Alert.alert('上拉加载');
+    // }
+
     renderItem = ({item, index}) => {
         return (
             <Item 
@@ -109,12 +130,15 @@ export default class Home extends Component {
             <SafeAreaView style={styles.container}>
                 <FlatList 
                 data={this.state.data} 
-                refreshing={this.state.refreshing}
-                onRefresh={this.onRefresh}
                 renderItem={this.renderItem}
                 ItemSeparatorComponent={ItemDivideComponent}
                 ListHeaderComponent={<ListHeader headerDisplay={this.state.headerDisplay} />}
-                ListEmptyComponent={<ListEmptyComponent refreshing={this.state.refreshing} onPress={this.onRefresh}></ListEmptyComponent>}
+                ListFooterComponent={<ListFooter headerDisplay={this.state.headerDisplay}/>}
+                ListEmptyComponent={<ListEmptyComponent refreshing={this.state.refreshing} onPress={this.onRefresh} />}
+                refreshing={this.state.refreshing}
+                onRefresh={this.onRefresh}
+                // onEndReachedThreshold={0.1}
+                // onEndReached={this.onEndReached}
                 keyExtractor={this.keyExtractor}>
                 </FlatList>
             </SafeAreaView>
@@ -127,6 +151,8 @@ const styles = StyleSheet.create({
         flex: 1,
         // backgroundColor: 'pink'
     },
+    
+    // 行元素组件样式
     item: {
         padding: 15,
         marginVertical: 5,
@@ -135,6 +161,8 @@ const styles = StyleSheet.create({
     itemText: {
         fontSize: 26,
     },
+
+    // 头部组件样式
     header: {
         width: '100%',
         height: 50
@@ -148,11 +176,35 @@ const styles = StyleSheet.create({
         textAlign: "center",
         // backgroundColor: 'pink'
     },
+
+    // 尾部组件样式
+    footer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 100,
+        // backgroundColor: 'pink'
+    },
+    footerImage: {
+        resizeMode: "contain",
+        width: 30,
+        height: 30,
+        // backgroundColor: 'skyblue'
+    },
+    footerText: {
+        paddingHorizontal: 20,
+        fontSize: 20,
+        color: 'darkgray'
+    },
+
+    // 分割线样式
     separator: {
         height: 1,
         backgroundColor: 'skyblue',
         marginHorizontal: 10
     },
+
+    // 尾部组件样式
     empty: {
         // display: "none"
         marginTop: 200,
