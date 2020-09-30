@@ -1,77 +1,7 @@
 import React, { Component } from 'react'
 import { Text, View, FlatList, SafeAreaView, StyleSheet, Image, ImageBackground, Alert } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import MyButton from '@/customComponents/MyButton'
-
-// 列表行元素组件
-const Item = ({item, index, onPress, selectIndex}) => {
-    const backgroundColor = index == selectIndex ? "#f9c2ff" : "skyblue";
-    return (
-        <TouchableOpacity 
-        onPress={onPress} 
-        style={[styles.item, {backgroundColor}]}>
-            <Text style={styles.itemText}>{`${index + 1}、${item.title}`}</Text>
-        </TouchableOpacity>
-    );
-}
-
-// 列表行分割线组件
-class ItemDivideComponent extends Component {
-    render() {
-        return (
-            <View style={styles.separator}></View>
-        );
-    }
-}
-
-// 列表头部组件
-class ListHeader extends Component {
-    constructor(props) {
-        super(props);
-    }
-    render() {
-        const imageUrl = 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2582590014,2299834898&fm=26&gp=0.jpg';
-        return (
-            <ImageBackground 
-            source={{uri: imageUrl}}
-            style={[styles.header, {display: this.props.headerDisplay}]}>
-                <Text style={styles.headerText}>{'ListHeaderComponent'}</Text>
-            </ImageBackground>
-        );
-    }
-}
-
-// 列表尾部组件
-class ListFooter extends Component {
-    constructor(props) {
-        super(props);
-    }
-    render() {
-        const logoUrl = 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=4154050993,1802582157&fm=26&gp=0.jpg';
-        return (
-            <View style={[styles.footer, {display: this.props.headerDisplay}]}>
-                <Image style={styles.footerImage} source={{uri: logoUrl}}></Image>
-                <Text style={styles.footerText}>{'To be perfect...'}</Text>
-            </View>
-        );
-    }
-}
-
-// 列表空数据占位显示组件
-class ListEmptyComponent extends Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        return (
-            <View style={[styles.empty, {display: this.props.refreshing ? 'none' : 'flex'}]}>
-                <Text style={styles.emptyText}>{'暂无数据'}</Text>
-                <MyButton style={styles.emptyButton} text={'点击刷新'} onPress={this.props.onPress}></MyButton>
-            </View>
-        );
-    }
-}
+import MyListEmptyView from '@/customComponents/MyListEmptyView'
 
 // 主页界面
 export default class Home extends Component {
@@ -134,7 +64,7 @@ export default class Home extends Component {
                 ItemSeparatorComponent={ItemDivideComponent}
                 ListHeaderComponent={<ListHeader headerDisplay={this.state.headerDisplay} />}
                 ListFooterComponent={<ListFooter headerDisplay={this.state.headerDisplay}/>}
-                ListEmptyComponent={<ListEmptyComponent refreshing={this.state.refreshing} onPress={this.onRefresh} />}
+                ListEmptyComponent={<MyListEmptyView refreshing={this.state.refreshing} onPress={this.onRefresh} />}
                 refreshing={this.state.refreshing}
                 onRefresh={this.onRefresh}
                 // onEndReachedThreshold={0.1}
@@ -142,6 +72,60 @@ export default class Home extends Component {
                 keyExtractor={this.keyExtractor}>
                 </FlatList>
             </SafeAreaView>
+        );
+    }
+}
+
+// 列表行元素组件
+const Item = ({item, index, onPress, selectIndex}) => {
+    const backgroundColor = index == selectIndex ? "#f9c2ff" : "skyblue";
+    return (
+        <TouchableOpacity 
+        onPress={onPress} 
+        style={[styles.item, {backgroundColor}]}>
+            <Text style={styles.itemText}>{`${index + 1}、${item.title}`}</Text>
+        </TouchableOpacity>
+    );
+}
+
+// 列表行分割线组件
+class ItemDivideComponent extends Component {
+    render() {
+        return (
+            <View style={styles.separator}></View>
+        );
+    }
+}
+
+// 列表头部组件
+class ListHeader extends Component {
+    constructor(props) {
+        super(props);
+    }
+    render() {
+        const imageUrl = 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2582590014,2299834898&fm=26&gp=0.jpg';
+        return (
+            <ImageBackground 
+            source={{uri: imageUrl}}
+            style={[styles.header, {display: this.props.headerDisplay}]}>
+                <Text style={styles.headerText}>{'ListHeaderComponent'}</Text>
+            </ImageBackground>
+        );
+    }
+}
+
+// 列表尾部组件
+class ListFooter extends Component {
+    constructor(props) {
+        super(props);
+    }
+    render() {
+        const logoUrl = 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=4154050993,1802582157&fm=26&gp=0.jpg';
+        return (
+            <View style={[styles.footer, {display: this.props.headerDisplay}]}>
+                <Image style={styles.footerImage} source={{uri: logoUrl}}></Image>
+                <Text style={styles.footerText}>{'To be perfect...'}</Text>
+            </View>
         );
     }
 }
@@ -203,28 +187,4 @@ const styles = StyleSheet.create({
         backgroundColor: 'skyblue',
         marginHorizontal: 10
     },
-
-    // 尾部组件样式
-    empty: {
-        // display: "none"
-        marginTop: 200,
-        alignItems: "center",
-        // backgroundColor: 'pink'
-    },
-    emptyText: {
-        color: 'gray',
-        fontSize: 24,
-        // backgroundColor: 'blue'
-    },
-    emptyButton: {
-        marginTop: 20,
-        paddingVertical: 8,
-        paddingHorizontal: 14,
-        fontSize: 20,
-        textAlign: "center",
-        borderRadius: 5,
-        overflow: "hidden",
-        backgroundColor: 'skyblue',
-        color: "#fff"
-    }
 });
