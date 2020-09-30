@@ -35,7 +35,6 @@ const styles = StyleSheet.create({
         paddingVertical: 8,
         paddingHorizontal: 14,
         fontSize: 20,
-        textAlign: "center",
         borderRadius: 5,
         overflow: "hidden",
         backgroundColor: 'skyblue',

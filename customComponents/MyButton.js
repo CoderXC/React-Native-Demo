@@ -23,6 +23,7 @@ export default class MyButton extends Component {
             <TouchableOpacity onPress={this.props.onPress}>
                 <Text style={{
                     borderRadius:5,
+                    textAlign: "center",
                     // shadowRadius:10,
                     // shadowOpacity:1,
                     // shadowOffset:{width:-5,height:5},
