@@ -35,7 +35,7 @@ export default class MovieListCell extends Component {
                         <Text style={cellStyles.scoreText}>{`观众评分 `}
                             <Text style={cellStyles.scoreValue}>{this.props.item.star}</Text>
                         </Text>
-                        <Text style={cellStyles.toStar}>{`导演：${this.props.item.toStar}`}</Text>
+                        <Text style={cellStyles.toStar} numberOfLines={1}>{`导演：${this.props.item.toStar}`}</Text>
                         <View style={cellStyles.performerInfo}>
                             <Text style={cellStyles.performer}>主演：</Text>
                             <Text style={[cellStyles.performer, {flex: 1}]} numberOfLines={3}>{this.props.item.performer}</Text>
@@ -84,7 +84,8 @@ const cellStyles = StyleSheet.create({
     },
     cover: {
         height: '100%',
-        width: 70
+        width: 70,
+        backgroundColor: '#eee'
     },
     content: {
         flex: 1,
@@ -92,7 +93,7 @@ const cellStyles = StyleSheet.create({
         // backgroundColor: 'skyblue'
     },
     title: {
-        fontSize: 20,
+        fontSize: 18,
         fontWeight: 'bold'
     },
     scoreText: {
