@@ -58,6 +58,7 @@ const cellStyles = StyleSheet.create({
         paddingVertical: 15,
         paddingHorizontal: 15,
         height: 140,
+        backgroundColor: '#fff'
     },
     linearGradient: {
         marginLeft: 10,
