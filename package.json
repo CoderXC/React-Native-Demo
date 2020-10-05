@@ -7,6 +7,7 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "bundle-ios":"node node_modules/react-native/local-cli/cli.js bundle --entry-file index.ios.js  --platform ios --dev true --bundle-output ./ios/bundle/index.ios.jsbundle --assets-dest ./ios/bundle",
+    "build_android": "cd android && ./gradlew assembleRelease",
     "test": "jest",
     "lint": "eslint ."
   },
