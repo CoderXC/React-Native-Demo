@@ -38,7 +38,7 @@ export default class MovieListCell extends Component {
                         <Text style={cellStyles.toStar} numberOfLines={1}>{`导演：${this.props.item.toStar}`}</Text>
                         <View style={cellStyles.performerInfo}>
                             <Text style={cellStyles.performer}>主演：</Text>
-                            <Text style={[cellStyles.performer, {flex: 1}]} numberOfLines={3}>{this.props.item.performer}</Text>
+                            <Text style={[cellStyles.performer, {flex: 1}]} numberOfLines={2}>{this.props.item.performer}</Text>
                         </View>
                     </View>
                 </View>
