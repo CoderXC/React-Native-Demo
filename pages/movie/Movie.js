@@ -96,7 +96,7 @@ export default class Movie extends Component {
             size: 10
         }
 
-        fetch(this.getFetchUrl(params))
+        fetch(this.getFetchUrl(ApiMovieList, params))
         .then((response) => response.json())
         .then((responseJson) => {
             const result = responseJson['result'];
