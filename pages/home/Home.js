@@ -20,7 +20,7 @@ export default class Home extends Component {
     // 行元素选中回调
     itemClick(item, index) {
         this.setState({selectIndex: index});
-        this.props.navigation.navigate(item.routeName);
+        this.props.navigation.navigate(item.routeName, {name: '传参测试标题'});
     }
 
     // 下拉刷新回调
