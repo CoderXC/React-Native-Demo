@@ -1,12 +1,9 @@
 import React, { Component } from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-
 import Icon from 'react-native-vector-icons/Ionicons';
-import HomeStackNavigator from './HomeStackNavigator'
-import MovieStackNavigator from './MovieStackNavigator'
+import Home from '../home/Home'
+import Movie from '../movie/Movie'
 
-const HomeTabName = 'HomeStackNavigator';
-const MovieTabName = 'MovieStackNavigator'
 const tabBarOptions = {activeTintColor: 'tomato', inactiveTintColor: 'gray'};
 
 const Tab = createBottomTabNavigator();
@@ -35,8 +32,8 @@ export default class MainTab extends Component {
         return (
             <Tab.Navigator tabBarOptions={tabBarOptions}>
                 <Tab.Screen 
-                name={HomeTabName}
-                component={HomeStackNavigator} 
+                name={'Home'}
+                component={Home} 
                 options={(props) => {
 	                return {
                         tabBarLabel: '组件demo',
@@ -51,8 +48,8 @@ export default class MainTab extends Component {
                 </Tab.Screen>
 
                 <Tab.Screen 
-                name={MovieTabName}
-                component={MovieStackNavigator} 
+                name={'Movie'}
+                component={Movie} 
                 options={(props) => {
 	                return {
                         tabBarLabel: '电影',
