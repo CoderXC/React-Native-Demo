@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { Alert, RefreshControl, SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
+import { FlatList, RefreshControl, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import MovieListCell from './components/MovieListCell'
 import MyListEmptyView from '@/customComponents/MyListEmptyView'
 
@@ -117,10 +116,9 @@ export default class Movie extends Component {
                 ItemSeparatorComponent={ItemDivideComponent}
                 ListFooterComponent={<ListFooter haveMoreData={this.state.haveMoreData}/>}
                 ListEmptyComponent={<MyListEmptyView refreshing={this.state.refreshing} onPress={this.onRefresh}/>}
-                refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh} />}
                 refreshing={this.state.refreshing}
                 onRefresh={this.onRefresh}
-                onEndReachedThreshold={0.1}
+                onEndReachedThreshold={0.3}
                 onEndReached={this.onEndReached.bind(this)}
                 keyExtractor={(item) => (item.id.toString())}
                 />
