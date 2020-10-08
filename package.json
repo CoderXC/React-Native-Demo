@@ -6,7 +6,7 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
-    "bundle-ios":"node node_modules/react-native/local-cli/cli.js bundle --entry-file index.ios.js  --platform ios --dev true --bundle-output ./ios/bundle/index.ios.jsbundle --assets-dest ./ios/bundle",
+    "bundle-ios": "node node_modules/react-native/local-cli/cli.js bundle --entry-file index.ios.js  --platform ios --dev true --bundle-output ./ios/bundle/index.ios.jsbundle --assets-dest ./ios/bundle",
     "build_android": "cd android && ./gradlew assembleRelease",
     "test": "jest",
     "lint": "eslint ."
@@ -24,6 +24,7 @@
     "react-native-reanimated": "^1.13.1",
     "react-native-safe-area-context": "^3.1.8",
     "react-native-screens": "^2.11.0",
+    "react-native-swiper": "^1.6.0",
     "react-native-vector-icons": "^7.1.0",
     "react-native-webp-format": "^1.1.2"
   },

@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import { FlatList, RefreshControl, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { FlatList, SafeAreaView, StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
+import Swiper from 'react-native-swiper';
+
 import MovieListCell from './components/MovieListCell'
 import MyListEmptyView from '@/customComponents/MyListEmptyView'
 
@@ -7,12 +9,15 @@ import MyListEmptyView from '@/customComponents/MyListEmptyView'
 const MockSever = 'http://web.peakchao.top:250';
 // 视频列表接口路径
 const ApiMovieList = '/video/getVideoList';
+// 视频banner列表
+const ApiBannerList = '/video/getVideoBanner'
 
 export default class Movie extends Component {
     constructor(props) {
         super(props);
         this.state = {
             data: [],
+            bannerData: [],
             refreshing: false,
             haveMoreData: true
         };
@@ -33,8 +38,8 @@ export default class Movie extends Component {
         alert('功能待接入中...');
     }
 
-    getFetchUrl(params) {
-        let url = MockSever + ApiMovieList;
+    getFetchUrl(apiPath, params) {
+        let url = MockSever + apiPath;
         if (params) {
             let paramsArray = [];
             //拼接参数
@@ -59,7 +64,7 @@ export default class Movie extends Component {
             size: 10
         }
 
-        fetch(this.getFetchUrl(params))
+        fetch(this.getFetchUrl(ApiMovieList, params))
         .then((response) => response.json())
         .then((responseJson) => {
             const result = responseJson['result'];
@@ -74,6 +79,15 @@ export default class Movie extends Component {
             alert(error);
         })
         .finally(() => {this.setState({refreshing: false})})
+
+        //刷新banner数据
+        fetch(this.getFetchUrl(ApiBannerList, null))
+        .then((response) => response.json())
+        .then((responseJson) => {
+            this.setState({
+                bannerData: responseJson['result']
+            });
+        });
     }
 
     onEndReached() {
@@ -107,13 +121,27 @@ export default class Movie extends Component {
             />
         );
     }
+
+    renderSwiper() {
+        var itemArr = [];
+        return this.state.bannerData.map((item) => {
+            return (
+                <TouchableOpacity key={item.id}>
+                    <Image style={styles.bannerImage} source={{uri: item['img']}}></Image>
+                </TouchableOpacity>
+            );
+        });
+    }
+
     render(h) {
+        const header = this.state.bannerData.length == 0 ? null : <Swiper style={styles.header} height={200}>{this.renderSwiper()}</Swiper>;
         return (
             <SafeAreaView style={{flex: 1}}>
                 <FlatList 
                 data={this.state.data}
                 renderItem={this.renderItem}
                 ItemSeparatorComponent={ItemDivideComponent}
+                ListHeaderComponent={header}
                 ListFooterComponent={<ListFooter haveMoreData={this.state.haveMoreData}/>}
                 ListEmptyComponent={<MyListEmptyView refreshing={this.state.refreshing} onPress={this.onRefresh}/>}
                 refreshing={this.state.refreshing}
@@ -138,6 +166,7 @@ class ItemDivideComponent extends Component {
     }
 }
 
+// 列表尾部控件
 class ListFooter extends Component {
     constructor(props) {
         super(props);
@@ -156,6 +185,13 @@ const styles = StyleSheet.create({
         height: 1,
         marginHorizontal: 15,
         backgroundColor: '#eee'
+    },
+    header: {
+        backgroundColor: 'lightgray'
+    },
+    bannerImage: {
+        height: 200,
+        resizeMode: 'cover'
     },
     footer: {
         marginVertical: 20,
